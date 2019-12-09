@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from airflow import AirflowException
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator, BranchPythonOperator
 from airflow.utils import timezone
@@ -23,12 +24,15 @@ def _print_weekday(**context):
 
 
 def _branching(**context):
-    if context['execution_date'].weekday() < 3:
+    weekday = context['execution_date'].strftime('%a')
+    if weekday in ('Mon', 'Tue'):
         name = 'bob'
-    elif context['execution_date'].weekday() < 5:
+    elif weekday in ('Wed', 'Thu'):
         name = 'alice'
-    else:
+    elif weekday in ('Fri', 'Sat'):
         name = 'joe'
+    else:
+        raise AirflowException(f"Invalid weekday {weekday}")
     return 'email_' + name
 
 
