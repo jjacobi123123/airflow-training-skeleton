@@ -33,7 +33,7 @@ with DAG(
         dagrun_timeout=timedelta(minutes=60),
 ) as dag:
     PostgresToGoogleCloudStorageOperator(task_id='postgres',
-                                         sql=f"SELECT * FROM land_registry_price_paid_uk WHERE transfer_date > {{execution_date.start_of('day').int_timestamp}} AND transfer_date < {{execution_date.end_of('day').int_timestamp}} LIMIT 10",
+                                         sql="SELECT * FROM land_registry_price_paid_uk WHERE transfer_date > {{execution_date.start_of('day').int_timestamp}} AND transfer_date < {{execution_date.end_of('day').int_timestamp}} LIMIT 10",
                                          filename="output.csv",
                                          bucket="land_data_training_jjac_airflow",
                                          postgres_conn_id='postgres_default')
