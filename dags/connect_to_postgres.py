@@ -34,6 +34,7 @@ with DAG(
 ) as dag:
     PostgresToGoogleCloudStorageOperator(task_id='postgres',
                                          sql="SELECT * FROM land_registry_price_paid_uk LIMIT 10",
+                                         filename="output.csv",
                                          bucket="land_data_training_jjac_airflow",
                                          postgres_conn_id='postgres_default')
     #print_weekday = PythonOperator(task_id='weekday_dag',
