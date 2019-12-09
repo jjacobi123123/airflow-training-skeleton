@@ -44,7 +44,7 @@ with DAG(
     branching = BranchPythonOperator(task_id='branching',
                                      python_callable=_branching,
                                      provide_context=True)
-    final_task = DummyOperator(task_id='final_task')
+    final_task = DummyOperator(task_id='final_task', trigger_rule='none_failed')
     for name in people:
         operator = DummyOperator(task_id='email_' + name)
         branching >> operator >> final_task
