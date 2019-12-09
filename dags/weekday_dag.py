@@ -19,7 +19,7 @@ people = ('bob', 'alice', 'joe')
 
 
 def _print_weekday(**context):
-    print(context['execution_date'].weekday())
+    print(context['execution_date'].strftime('%a'))
 
 
 def _branching(**context):
