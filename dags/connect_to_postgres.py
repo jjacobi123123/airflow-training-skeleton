@@ -33,8 +33,8 @@ with DAG(
         dagrun_timeout=timedelta(minutes=60),
 ) as dag:
     PostgresToGoogleCloudStorageOperator(task_id='postgres',
-                                         sql="SELECT * FROM land_registry_price_paid_uk WHERE transfer_date = '{{ds}}'::date LIMIT 10",
-                                         filename="output.csv",
+                                         sql="SELECT * FROM land_registry_price_paid_uk WHERE transfer_date::date = '{{ds}}'::date LIMIT 1000",
+                                         filename="output-{{ds}}.csv",
                                          bucket="land_data_training_jjac_airflow",
                                          postgres_conn_id='postgres_default')
     #print_weekday = PythonOperator(task_id='weekday_dag',
