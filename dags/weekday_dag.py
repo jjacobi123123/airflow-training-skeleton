@@ -42,7 +42,8 @@ with DAG(
                                    python_callable=_print_weekday,
                                    provide_context=True)
     branching = BranchPythonOperator(task_id='branching',
-                                         python_callable=_branching)
+                                     python_callable=_branching,
+                                     provide_context=True)
     final_task = DummyOperator(task_id='final_task')
     for name in people:
         operator = DummyOperator(task_id='email_' + name)
