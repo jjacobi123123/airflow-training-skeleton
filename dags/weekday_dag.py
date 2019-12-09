@@ -29,7 +29,7 @@ def _branching(**context):
         name = 'bob'
     elif weekday in ('Wed', 'Thu'):
         name = 'alice'
-    elif weekday in ('Fri', 'Sat'):
+    elif weekday in ('Fri', 'Sat', 'Sun'):
         name = 'joe'
     else:
         raise AirflowException(f"Invalid weekday {weekday}")
