@@ -34,7 +34,7 @@ with DAG(
     wait_10 = BashOperator(task_id='wait_10', bash_command="sleep 5")
     the_end = DummyOperator(task_id='the_end')
 
-print_execution_date >> wait_1 >> the_end
-print_execution_date >> wait_5 >> the_end
-print_execution_date >> wait_10 >> the_end
+print_execution_date_operator >> wait_1 >> the_end
+print_execution_date_operator >> wait_5 >> the_end
+print_execution_date_operator >> wait_10 >> the_end
 
