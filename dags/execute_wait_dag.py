@@ -1,4 +1,3 @@
-
 from datetime import timedelta
 
 from airflow.operators.bash_operator import BashOperator
@@ -26,8 +25,7 @@ with DAG(
         default_args=args,
         schedule_interval=None,
         dagrun_timeout=timedelta(minutes=60),
-    ) as dag:
-
+) as dag:
     print_execution_date_operator = PythonOperator(task_id='print_execution_date',
                                                    python_callable=print_execution_date,
                                                    provide_context=True)
@@ -39,4 +37,3 @@ with DAG(
 print_execution_date_operator >> wait_1 >> the_end
 print_execution_date_operator >> wait_5 >> the_end
 print_execution_date_operator >> wait_10 >> the_end
-
