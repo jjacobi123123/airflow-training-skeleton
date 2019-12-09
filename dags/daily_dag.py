@@ -1,5 +1,7 @@
 
 from datetime import timedelta
+from airflow.utils import timezone
+
 import datetime
 
 import airflow
@@ -8,7 +10,7 @@ from airflow.operators.dummy_operator import DummyOperator
 
 args = {
     'owner': 'Airflow',
-    'start_date': datetime.date(2019, 11, 1),
+    'start_date': timezone.datetime(2019, 11, 1),
 }
 
 with DAG(
