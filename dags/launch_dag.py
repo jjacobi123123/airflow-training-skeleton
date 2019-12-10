@@ -12,6 +12,7 @@ args = {"owner": "godatadriven", "start_date": airflow.utils.dates.days_ago(10)}
 
 
 def _on_failure_callback(context):
+    print('failure!!!')
     print(context)
 
 
