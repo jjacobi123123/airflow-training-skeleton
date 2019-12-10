@@ -10,7 +10,7 @@ from hooks.launch_hook import LaunchHook
 
 class LaunchToGcsOperator(BaseOperator):
 
-    template_fields = ('start_date_str', 'end_date_str')
+    template_fields = ('start_date_str', 'end_date_str', 'file_name')
 
     ui_color = '#555'
     ui_fgcolor = '#fff'
