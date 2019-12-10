@@ -1,2 +1,4 @@
 slackclient
-apache-airflow[gcp_api,postgres]==1.10.5
+apache-airflow[gcp_api,postgres]==1.10.6
+pytest
+pytest-mock
