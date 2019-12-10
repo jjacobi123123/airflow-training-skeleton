@@ -1,6 +1,8 @@
 import json
 import pathlib
 import posixpath
+from os import path
+
 import airflow
 import requests
 from airflow.contrib.operators.dataproc_operator import DataprocClusterCreateOperator, DataProcPySparkOperator, \
@@ -38,7 +40,7 @@ with DAG(dag_id="real_estate_dag",
                                                    num_workers=4,
                                                    region='europe-west1',
                                                    task_id='start_dataproc')
-    proc_dataproc = DataProcPySparkOperator(main='./spark/build_statistics.py',
+    proc_dataproc = DataProcPySparkOperator(main=path.join(path.dirname(__file__)) + '/build_statistics.py',
                                             project_id='airflowbolcomdec-7601d68caa710',
                                             cluster_name='test-dataproc-jjac-{{ds}}',
                                             region='europe-west1',
