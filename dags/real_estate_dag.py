@@ -38,7 +38,7 @@ with DAG(dag_id="real_estate_dag",
                                                    num_workers=4,
                                                    region='europe-west1',
                                                    task_id='start_dataproc')
-    proc_dataproc = DataProcPySparkOperator(main='spark/build_statistics.py',
+    proc_dataproc = DataProcPySparkOperator(main='./spark/build_statistics.py',
                                             project_id='airflowbolcomdec-7601d68caa710',
                                             cluster_name='test-dataproc-jjac-{{ds}}',
                                             region='europe-west1',
