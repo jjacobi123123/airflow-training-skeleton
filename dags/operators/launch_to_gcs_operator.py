@@ -45,7 +45,7 @@ class LaunchToGcsOperator(BaseOperator):
         hook = GoogleCloudStorageHook(
             google_cloud_storage_conn_id=self.google_cloud_storage_conn_id)
         for tmp_file in files_to_upload:
-            hook.upload(self.bucket, tmp_file,
-                        self.file_name,
+            hook.upload(bucket=self.bucket, filename=tmp_file,
+                        object=self.file_name,
                         mime_type='application/json',
                         gzip=False)
