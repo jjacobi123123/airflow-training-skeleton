@@ -3,6 +3,8 @@ import pathlib
 import posixpath
 import airflow
 import requests
+from airflow.contrib.operators.dataproc_operator import DataprocClusterCreateOperator, DataProcPySparkOperator, \
+    DataprocClusterDeleteOperator
 from airflow.models import DAG
 
 from operators.http_to_gcs_operator import HttpToGcsOperator
@@ -31,3 +33,12 @@ exchange_to_gcs = HttpToGcsOperator(gcs_bucket='land_data_training_jjac_airflow'
                                                task_id="get_data",
                                                dag=dag)
 
+start_dataproc = DataprocClusterCreateOperator(project_id='airflowbolcomdec-7601d68caa710',
+                                               cluster_name='test-dataproc-jjac',
+                                               num_workers=4)
+proc_dataproc = DataProcPySparkOperator(main='build_statistics.py',
+                                        arguments=['inp_prop', 'inp_curren', 'target_path', 'tar_curr', 'tar_date'])
+delete_dataproc = DataprocClusterDeleteOperator(project_id='airflowbolcomdec-7601d68caa710',
+                                                cluster_name='test-dataproc-jjac')
+
+exchange_to_gcs >> start_dataproc >> proc_dataproc >> delete_dataproc
