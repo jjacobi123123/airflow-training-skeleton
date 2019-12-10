@@ -17,28 +17,30 @@ def _on_failure_callback(context):
     print(context)
 
 
-dag = DAG(dag_id="real_estate_dag",
+with DAG(dag_id="real_estate_dag",
           default_args=args,
           on_failure_callback=_on_failure_callback,
           description="Own stuff",
-          schedule_interval="0 0 * * *")
+          schedule_interval="0 0 * * *") as dag:
 
 
 
 
 
-exchange_to_gcs = HttpToGcsOperator(gcs_bucket='land_data_training_jjac_airflow',
-                                             gcs_path='exchange-rates/exchange-rates-{{ds}}.json',
-                                             endpoint='/history?start_at={{ds}}&end_at={{tomorrow_ds}}&symbols=EUR&base=GBP',
-                                               task_id="get_data",
-                                               dag=dag)
+    exchange_to_gcs = HttpToGcsOperator(gcs_bucket='land_data_training_jjac_airflow',
+                                                 gcs_path='exchange-rates/exchange-rates-{{ds}}.json',
+                                                 endpoint='/history?start_at={{ds}}&end_at={{tomorrow_ds}}&symbols=EUR&base=GBP',
+                                                   task_id="get_data")
 
-start_dataproc = DataprocClusterCreateOperator(project_id='airflowbolcomdec-7601d68caa710',
-                                               cluster_name='test-dataproc-jjac',
-                                               num_workers=4)
-proc_dataproc = DataProcPySparkOperator(main='build_statistics.py',
-                                        arguments=['inp_prop', 'inp_curren', 'target_path', 'tar_curr', 'tar_date'])
-delete_dataproc = DataprocClusterDeleteOperator(project_id='airflowbolcomdec-7601d68caa710',
-                                                cluster_name='test-dataproc-jjac')
+    start_dataproc = DataprocClusterCreateOperator(project_id='airflowbolcomdec-7601d68caa710',
+                                                   cluster_name='test-dataproc-jjac',
+                                                   num_workers=4,
+                                                   task_id='start_dataproc')
+    proc_dataproc = DataProcPySparkOperator(main='build_statistics.py',
+                                            arguments=['inp_prop', 'inp_curren', 'target_path', 'tar_curr', 'tar_date'],
+                                            task_id="proc_dataproc")
+    delete_dataproc = DataprocClusterDeleteOperator(project_id='airflowbolcomdec-7601d68caa710',
+                                                    cluster_name='test-dataproc-jjac',
+                                                    task_id="delete_dataproc")
 
-exchange_to_gcs >> start_dataproc >> proc_dataproc >> delete_dataproc
+    exchange_to_gcs >> start_dataproc >> proc_dataproc >> delete_dataproc
