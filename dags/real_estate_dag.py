@@ -25,9 +25,9 @@ dag = DAG(dag_id="real_estate_dag",
 
 
 
-download_rocket_launches = HttpToGcsOperator(gcs_bucket='land_data_training_jjac_airflow',
+exchange_to_gcs = HttpToGcsOperator(gcs_bucket='land_data_training_jjac_airflow',
                                              gcs_path='exchange-rates/exchange-rates-{{ds}}.json',
-                                             endpoint='https://api.exchangeratesapi.io/history?start_at={{ds}}&end_at={{tomorrow_ds}}&symbols=EUR&base=GBP',
+                                             endpoint='/history?start_at={{ds}}&end_at={{tomorrow_ds}}&symbols=EUR&base=GBP',
                                                task_id="get_data",
                                                dag=dag)
 
