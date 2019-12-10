@@ -43,6 +43,7 @@ with DAG(dag_id="real_estate_dag",
                                             task_id="proc_dataproc")
     delete_dataproc = DataprocClusterDeleteOperator(project_id='airflowbolcomdec-7601d68caa710',
                                                     cluster_name='test-dataproc-jjac',
+                                                    region='europe-west1',
                                                     task_id="delete_dataproc", trigger_rule=TriggerRule.ALL_DONE)
 
     exchange_to_gcs >> start_dataproc >> proc_dataproc >> delete_dataproc
