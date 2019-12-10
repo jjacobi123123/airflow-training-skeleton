@@ -15,10 +15,10 @@ def _on_failure_callback(context):
     print(context)
 
 
-dag = DAG(dag_id="download_rocket_launches",
+dag = DAG(dag_id="download_rocket_launches_own",
           default_args=args,
           on_failure_callback=_on_failure_callback,
-          description="DAG downloading rocket launches from Launch Library.",
+          description="Own stuff",
           schedule_interval="0 0 * * *")
 
 
