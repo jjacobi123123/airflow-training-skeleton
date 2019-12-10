@@ -15,12 +15,12 @@ class LaunchToGcsOperator(BaseOperator):
     ui_fgcolor = '#fff'
 
     @apply_defaults
-    def __init__(self, bucket, file_name, start_date, end_date, google_cloud_storage_conn_id='google_cloud_default', *args, **kwargs):
+    def __init__(self, bucket, file_name, start_date_str, end_date_str, google_cloud_storage_conn_id='google_cloud_default', *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.google_cloud_storage_conn_id = google_cloud_storage_conn_id
         self.bucket = bucket
-        self.start_date = start_date
-        self.end_date = end_date
+        self.start_date_str = start_date_str
+        self.end_date_str = end_date_str
         self.file_name = file_name
 
     def execute(self, context):
@@ -33,7 +33,7 @@ class LaunchToGcsOperator(BaseOperator):
 
     def _retrieve_launches(self):
         hook = LaunchHook()
-        return hook.fetch(self.start_date, self.end_date)
+        return hook.fetch(self.start_date_str, self.end_date_str)
 
 
     def _upload_to_gcs(self, files_to_upload):

@@ -37,8 +37,8 @@ def _print_stats(ds, **context):
 
 download_rocket_launches = LaunchToGcsOperator(bucket='land_data_training_jjac_airflow',
                                                file_name='launches.json',
-                                               start_date='{{ds}}',
-                                               end_date='{{tomorrow_ds}}',
+                                               start_date_str='{{ds}}',
+                                               end_date_str='{{tomorrow_ds}}',
                                                task_id="download_rocket_launches",
                                                dag=dag)
 print_stats = PythonOperator(task_id="print_stats", python_callable=_print_stats, provide_context=True, dag=dag)
