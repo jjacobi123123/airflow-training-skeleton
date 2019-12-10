@@ -28,6 +28,7 @@ class LaunchToGcsOperator(BaseOperator):
         data = json.dumps(self._retrieve_launches())
         tmp_file_handle = NamedTemporaryFile('w+', delete=True)
         tmp_file_handle.write(data)
+        tmp_file_handle.flush()
         self._upload_to_gcs([tmp_file_handle.name])
         tmp_file_handle.close()
 
