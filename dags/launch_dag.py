@@ -6,7 +6,7 @@ import requests
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 
-from dags.operators.launch_to_gcs_operator import LaunchToGcsOperator
+from operators.launch_to_gcs_operator import LaunchToGcsOperator
 
 args = {"owner": "godatadriven", "start_date": airflow.utils.dates.days_ago(10)}
 
