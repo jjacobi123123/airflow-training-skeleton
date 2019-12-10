@@ -11,6 +11,7 @@ import datetime
 import airflow
 from airflow.models import DAG
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.utils.trigger_rule import TriggerRule
 from httplib2 import Http
 
 args = {
@@ -71,7 +72,7 @@ with DAG(
                                      python_callable=_branching,
                                      provide_context=True)
     final_task = PythonOperator(task_id='final_task',
-                                trigger_rule='none_failed',
+                                trigger_rule=TriggerRule.NONE_FAILED,
                                 python_callable=_send_google_chat_notification,
                                 provide_context=True)
     for name in people:
