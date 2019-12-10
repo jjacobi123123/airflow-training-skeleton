@@ -35,6 +35,7 @@ with DAG(dag_id="real_estate_dag",
     start_dataproc = DataprocClusterCreateOperator(project_id='airflowbolcomdec-7601d68caa710',
                                                    cluster_name='test-dataproc-jjac',
                                                    num_workers=4,
+                                                   region='europe-west1',
                                                    task_id='start_dataproc')
     proc_dataproc = DataProcPySparkOperator(main='build_statistics.py',
                                             arguments=['inp_prop', 'inp_curren', 'target_path', 'tar_curr', 'tar_date'],
