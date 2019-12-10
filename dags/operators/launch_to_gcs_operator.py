@@ -4,7 +4,7 @@ from airflow.contrib.hooks.gcs_hook import GoogleCloudStorageHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
-from dags.hooks.launch_hook import LaunchHook
+from hooks.launch_hook import LaunchHook
 
 
 class LaunchToGcsOperator(BaseOperator):
