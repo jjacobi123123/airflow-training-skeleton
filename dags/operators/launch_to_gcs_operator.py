@@ -1,3 +1,4 @@
+import json
 from tempfile import NamedTemporaryFile
 
 from airflow.contrib.hooks.gcs_hook import GoogleCloudStorageHook
@@ -24,7 +25,7 @@ class LaunchToGcsOperator(BaseOperator):
         self.file_name = file_name
 
     def execute(self, context):
-        data = self._retrieve_launches()
+        data = json.dumps(self._retrieve_launches())
         tmp_file_handle = NamedTemporaryFile(delete=True)
         tmp_file_handle.write(data)
         tmp_file_handle.close()
